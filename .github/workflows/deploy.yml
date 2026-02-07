@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug key length
+        run: echo "${{ secrets.VULTR_SSH_KEY}}" | wc -c
+
       - name: Checkout code
         uses: actions/checkout@v3
 
