@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Debug key length
-        run: echo "${{ secrets.VULTR_SSH_KEY}}" | wc -c
+        run: echo "${{ secrets.VULTR_SSH_KEY}}" | head -n 1
 
       - name: Checkout code
         uses: actions/checkout@v3
