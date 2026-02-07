@@ -20,7 +20,7 @@ jobs:
           username: root
           key: ${{ secrets.VULTR_SSH_KEY }}
           script: |
-            cd /root/nocentra>
+            cd /root/nocentra-backend>
             git pull origin main
             docker compose down || true
             docker compose up -d --build
