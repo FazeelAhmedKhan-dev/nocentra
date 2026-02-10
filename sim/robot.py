@@ -2,7 +2,7 @@ import math
 from sim.config import MOVE_COST
 
 class RobotAgent:
-    
+
     def __init__(self, robot_id, position):
         self.id = robot_id
         self.position = position
@@ -42,7 +42,7 @@ class RobotAgent:
         self.state = "executing"
 
     def step(self):
-        if self.battey <= 0:
+        if self.battery <= 0:
             self.state = "failed"
             return
         
