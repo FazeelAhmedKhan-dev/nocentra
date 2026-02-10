@@ -2,27 +2,28 @@ import math
 from sim.config import MOVE_COST
 
 class RobotAgent:
+    
     def __init__(self, robot_id, position):
         self.id = robot_id
         self.position = position
         self.battery = 100
         self.current_task = None
         self.state = "idle"
-	self.task_phase = None
+        self.task_phase = None
 
     def distance(self, point):
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
 
     def handle_arrival(self):
-	if self.task_pickup == "pickup":
-	    self.task_phase = "dropoff"
-	    self.current_task.status = "picked"
-
-	elif self.task_phase == "dropoff":
-	    self.current_task.status = "completed"
-	    self.current_task = None
-	    self.task_phase = None
-	    self.state = "idle"
+        if self.task_pickup == "pickup":
+            self.task_phase = "dropoff"
+            self.current_task.status = "picked"
+        
+        elif self.task_phase == "dropoff":
+            self.current_task.status = "completed"
+            self.current_task = None
+            self.task_phase = None
+            self.state = "idle"
 
     def compute_bid(self, task):
         if self.state != "idle":
@@ -37,26 +38,27 @@ class RobotAgent:
 
     def assign_task(self, task):
         self.current_task = task
-	self.task_phase = "pickup"
+        self.task_phase = "pickup"
         self.state = "executing"
 
     def step(self):
-
-	if self.battey <= 0:
-	    self.state = "failed"
-	    return
-
-    	if self.state != "executing" or not self.current_task:
+        if self.battey <= 0:
+            self.state = "failed"
             return
-
-    	if self.task_phase == "pickup":
+        
+        if self.state != "executing" or not self.current_task:
+            return
+        
+        if self.task_phase == "pickup":
             target = self.current_task.pickup
-    	else:
-       	    target = self.current_task.dropoff
-
-    	if self.position == target:
+        
+        else:
+            target = self.current_task.dropoff
+        
+        if self.position == target:
             self.handle_arrival()
-    	else:
+        
+        else:
             self.move_towards(target)
 
 

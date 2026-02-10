@@ -11,7 +11,10 @@ for _ in range(20):
     world.step()
     print("Time:", world.time)
     for r in world.robots:
-        print(f"Robot {r.id} | Pos {r.position} | State {r.state}")
+        print(
+            f"Robot {r.id} | Pos {r.position} | "
+            f"State {r.state} | Phase {r.task_phase}"
+        )
     print("-" * 30)
     time.sleep(0.2)
 
