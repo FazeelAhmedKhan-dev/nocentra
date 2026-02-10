@@ -13,6 +13,17 @@ class RobotAgent:
     def distance(self, point):
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
 
+    def handle_arrival(self):
+	if self.task_pickup == "pickup":
+	    self.task_phase = "dropoff"
+	    self.current_task.status = "picked"
+
+	elif self.task_phase == "dropoff":
+	    self.current_task.status = "completed"
+	    self.current_task = None
+	    self.task_phase = None
+	    self.state = "idle"
+
     def compute_bid(self, task):
         if self.state != "idle":
             return None
@@ -30,8 +41,24 @@ class RobotAgent:
         self.state = "executing"
 
     def step(self):
-        if self.current_task:
-            self.move_towards(self.current_task.pickup)
+
+	if self.battey <= 0:
+	    self.state = "failed"
+	    return
+
+    	if self.state != "executing" or not self.current_task:
+            return
+
+    	if self.task_phase == "pickup":
+            target = self.current_task.pickup
+    	else:
+       	    target = self.current_task.dropoff
+
+    	if self.position == target:
+            self.handle_arrival()
+    	else:
+            self.move_towards(target)
+
 
     def move_towards(self, target):
         x, y = self.position
@@ -47,5 +74,5 @@ class RobotAgent:
             y -= 1
 
         self.position = (x, y)
-        self.battery -= MOVE_COST
+        self.battery = max(0, self.battery - MOVE_COST)
 

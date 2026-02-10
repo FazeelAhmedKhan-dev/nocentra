@@ -19,5 +19,6 @@ class WarehouseWorld:
     def step(self):
         for robot in self.robots:
             robot.step()
+	self.tasks = [t for t in self.tasks if t.status != "completed"]
         self.time += 1
 
