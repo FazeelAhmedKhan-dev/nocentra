@@ -8,6 +8,7 @@ class RobotAgent:
         self.battery = 100
         self.current_task = None
         self.state = "idle"
+	self.task_phase = None
 
     def distance(self, point):
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
@@ -25,6 +26,7 @@ class RobotAgent:
 
     def assign_task(self, task):
         self.current_task = task
+	self.task_phase = "pickup"
         self.state = "executing"
 
     def step(self):
