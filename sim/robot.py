@@ -15,7 +15,7 @@ class RobotAgent:
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
 
     def handle_arrival(self):
-        if self.task_pickup == "pickup":
+        if self.task_phase == "pickup":
             self.task_phase = "dropoff"
             self.current_task.status = "picked"
         
