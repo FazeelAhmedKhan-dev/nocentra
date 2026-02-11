@@ -14,7 +14,6 @@ class RobotAgent:
     
     def fail(self):
         self.failed = True
-        self.state = "failed"
 
     def distance(self, point):
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
@@ -49,6 +48,7 @@ class RobotAgent:
     def step(self):
 
         if self.failed:
+            self.state = "failed"
             return
         
         if self.battery <= 0:

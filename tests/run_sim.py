@@ -7,11 +7,16 @@ world.add_task((5, 5), (10, 10))
 
 for t in range(30):
 
-    if t == 0:
-        print("\n Robot 4 Failed \n")
-        world.kill_robot(4)
-        
     world.step()
+
+    if t == 5:
+        print("\n💥 Killing robot that is executing\n")
+        # kill whichever robot currently has a task
+        for r in world.robots:
+            if r.state == "executing":
+                world.kill_robot(r.id)
+                break
+
     print("Time:", world.time)
     for r in world.robots:
         print(
