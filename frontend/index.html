@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Warehouse Simulation</title>
+</head>
+<body>
+  <canvas id="sim" width="600" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById("sim");
+    const ctx = canvas.getContext("2d");
+
+    const ws = new WebSocket("ws://localhost:8000/ws");
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      draw(data);
+    };
+
+    function draw(data) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      data.robots.forEach(r => {
+        ctx.beginPath();
+        ctx.arc(r.x * 20, r.y * 20, 8, 0, Math.PI * 2);
+        ctx.fillStyle = r.state === "failed" ? "red" : "blue";
+        ctx.fill();
+      });
+    }
+  </script>
+</body>
+</html>
