@@ -4,10 +4,13 @@ import time
 world = WarehouseWorld()
 
 world.add_task((5, 5), (10, 10))
-world.add_task((2, 6), (8, 1))
-world.add_task((15, 3), (1, 1))
 
-for _ in range(20):
+for t in range(30):
+
+    if t == 0:
+        print("\n Robot 4 Failed \n")
+        world.kill_robot(4)
+        
     world.step()
     print("Time:", world.time)
     for r in world.robots:

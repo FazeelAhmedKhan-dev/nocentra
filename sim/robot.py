@@ -10,6 +10,11 @@ class RobotAgent:
         self.current_task = None
         self.state = "idle"
         self.task_phase = None
+        self.failed = False
+    
+    def fail(self):
+        self.failed = True
+        self.state = "failed"
 
     def distance(self, point):
         return abs(self.position[0] - point[0]) + abs(self.position[1] - point[1])
@@ -42,6 +47,10 @@ class RobotAgent:
         self.state = "executing"
 
     def step(self):
+
+        if self.failed:
+            return
+        
         if self.battery <= 0:
             self.state = "failed"
             return
